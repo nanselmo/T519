@@ -1,10 +1,10 @@
- //<>//
+
 void setup()
 {
   // GUI setup
   size(displayWidth,displayHeight);
   
-  setup_tuio(); //<>//
+  setup_tuio();
 }
 
 // within the draw method we retrieve an ArrayList of type <TuioObject>
@@ -19,6 +19,8 @@ void draw()
   text("MOOD METER",800,100);  
   
   float obj_size = object_size*scale_factor; 
+  float startSpot = 0;
+  Boolean startSpotMarked = false;
   
 
 
@@ -45,9 +47,18 @@ void draw()
      if(gamePiece == "spinnerPiece"){
        String studentName = getStudentName(angle);
        fill(#163DD6);                         
-       text("Name: " + studentName,1200,100);  
-  
-     
+       text("Name: " + studentName,1200,100);     
+     }
+     else if  (gamePiece == "startPiece" && startSpotMarked==false){
+       startSpot = x;
+       startSpotMarked = true; //don't need to keep checking this
+     }
+     else if (gamePiece == "stopPiece"){
+       float endSpot = x;
+       float sliderDistance = endSpot - startSpot;
+       String studentEmotion = getStudentEmotion(sliderDistance);
+       fill(#1D9594);
+       text("Emotion: " + studentEmotion, 900, 100);
      }
      
      //lets try it as a property of the TuioObject class?
@@ -58,16 +69,16 @@ void draw()
 
 String getGamePiece(int tuioObjID){
   String nameOfPiece ;
-   if(tuioObjID==1){
+   if(tuioObjID==0){
      nameOfPiece = "completePiece";
    }
-   else if (tuioObjID==2){
+   else if (tuioObjID==1){
      nameOfPiece = "spinnerPiece";
    } 
-   else if (tuioObjID==3){
+   else if (tuioObjID==4){
      nameOfPiece = "sliderStartPiece";
    }
-   else if (tuioObjID==4){
+   else if (tuioObjID==46){
      nameOfPiece = "sliderStopPiece";
    }
    else {
@@ -83,32 +94,37 @@ String getStudentName(float spinnerAngle){
    int numOfStu = names.length;
    float degreeInterval = (2*3.14)/numOfStu;
    float degreeBuffer = degreeInterval/4 ;
-   text(degreeInterval, 10, 100);
    int spinnerSectionNum = 0;
    if (spinnerAngle <= degreeInterval) {
      spinnerSectionNum = 0;
    }
    else {
      spinnerSectionNum = int(spinnerAngle/degreeInterval);
-   }
-   fill(#5E10DE);                         
-   text(spinnerSectionNum,1000,500);  
-   //stuName = names[spinnerSectionNum];
-   
-     //if(spinnerAngle >= (0*degreeInterval) && spinnerAngle <= (1*degreeInterval)){ 
-     //  stuName=names[0];
-     //}
-     //else if (spinnerAngle >=(1*degreeInterval) && spinnerAngle <= (2*degreeInterval)) {
-     //  stuName=names[1];
-     //}
-     //else if (spinnerAngle >= (2*degreeInterval) && spinnerAngle <= (3*degreeInterval)) {
-     //  stuName=names[2];
-     //}
-     //else if (spinnerAngle >= (3*degreeInterval) && spinnerAngle <= (4*degreeInterval)) {
-     //  stuName=names[3];
-     //}
+   } 
+   stuName = names[spinnerSectionNum];
     return  stuName;
 }
+
+String getStudentEmotion(float sliderLength){
+  
+   String stuEmotion = "Unknown";
+   String[] emotions= {"Very Sad", "Sad", "Neutral", "Happy", "Very Happy"};
+   int numOfEmotions = emotions.length;
+   int startingDistance = 125;
+   float emotionInterval = startingDistance/numOfEmotions;
+   int emotionSectionNum = 0;
+   if (sliderLength <= emotionInterval) { 
+     emotionSectionNum = 0;
+   }
+   else {
+     emotionSectionNum = int(sliderLength/emotionInterval);
+   }
+   fill(#5E10DE);                         
+   text(emotionSectionNum,0,0);  
+   stuEmotion = emotions[emotionSectionNum];
+   return  stuEmotion;
+}
+
 
 
 
