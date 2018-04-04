@@ -30,11 +30,11 @@ void draw()
 
   fill(0);  
   textSize(48);
-  text("MOOD METER",800,50);  
+  text("MOOD METER!",800,50);  
   fill(255);
   rect(30,90,1000,700);
   
-  text("THIS IS A TEST", 500, 500);
+
   
   float obj_size = object_size*scale_factor; 
   
@@ -42,14 +42,6 @@ void draw()
   ArrayList<TuioObject> tuioObjectList = tuioClient.getTuioObjectList();
   for (int i=0;i<tuioObjectList.size();i++) {
        TuioObject tobj = tuioObjectList.get(i);
-       
-       //for testing
-       // we retrieve some information about this fiducial marker
-       int id = tobj.getSymbolID();
-       int x = tobj.getScreenX(width);
-       int y = tobj.getScreenY(height);
-       
-       
        
        //create gamePieceObjects  
        gamePieceObject piece = new gamePieceObject(tobj);
