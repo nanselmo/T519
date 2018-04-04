@@ -55,7 +55,6 @@ class gamePieceObject{
      String[] names= {"Lilly", "Raegan", "James", "Raven", "A'mya", "Cedric", "Sarah", "Charlie"};
      int numOfStu = names.length;
      float degreeInterval = (2*3.14)/numOfStu;
-     float degreeBuffer = degreeInterval/4 ;
      int spinnerSectionNum = 0;
      if (spinnerAngle <= degreeInterval) {
        spinnerSectionNum = 0;
@@ -73,35 +72,36 @@ class gamePieceObject{
 
   void updateSlider(){
     
-         float sliderLength = 430.0; //refactor: do this dynamically
+         float sliderLength = this.x_pos-10; //refactor: do this dynamically
+         String[] emotions= {"Very Sad", "Sad", "Neutral", "Happy", "Very Happy"};
+         int numEmotions = emotions.length;
          
-         String studentEmotion = this.getStudentEmotion(sliderLength);
-         PImage emotionImg = veryHappyImg;
-         image(emotionImg, (this.x_pos-60),this.y_pos, emotionImg.width/10, emotionImg.height/10);
+         //do some math to determine where the slider is
+         int emotionNum= this.getStudentEmotionNum(sliderLength, numEmotions);
+         
+         
+         String studentEmotion = emotions[emotionNum];
+         PImage[] emotionImages = {verySadImg, sadImg, neutralImg, happyImg, veryHappyImg};
+         PImage emotionImg = emotionImages[emotionNum];
+         image(emotionImg, this.x_pos - emotionImg.width/10 ,this.y_pos + (emotionImg.height/10), emotionImg.width/10, emotionImg.height/10);
          fill(#1D9594);
          textSize(36);
          text("Emotion: " + studentEmotion, 1500, 50);
   
   }
   
-  String getStudentEmotion(float sliderLength){
-           String stuEmotion = "Unknown";
-           String[] emotions= {"Very Sad", "Sad", "Neutral", "Happy", "Very Happy"};
-           int numOfEmotions = emotions.length;
-           int startingDistance = 430;
-           float emotionInterval = startingDistance/(numOfEmotions-1);
-           int emotionSectionNum = 0;
+  int getStudentEmotionNum(float sliderLength, int numOfEmotions){
+           //int startingDistance = 880;
+           //float emotionInterval = startingDistance/(numOfEmotions-1);
+           //int emotionSectionNum = 0;
+           int emotionSectionNum = int(sliderLength/250); 
+           fill(0);
+           text(emotionSectionNum, 60,100);
            
-        
-            emotionSectionNum = int(sliderLength/emotionInterval);
-          
-           fill(#5E10DE);     
-        
-           if (emotionSectionNum>=5){
-             emotionSectionNum = 4;
+           if (emotionSectionNum>=numOfEmotions){
+             emotionSectionNum = numOfEmotions-1;
            }
-           stuEmotion = emotions[emotionSectionNum];
-         return  stuEmotion;
+         return  emotionSectionNum;
   }
   
   void finishCheckIn(){
