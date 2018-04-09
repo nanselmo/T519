@@ -4,7 +4,11 @@ PImage happyImg;
 PImage neutralImg;
 PImage sadImg;
 PImage verySadImg;
-float sliderStartDistance = 0.0;
+float sliderStartDistance;
+Table stuDataTable;
+Boolean stuFinished;
+String stuEmotion;
+String stuName;
 
 void setup()
 {
@@ -17,6 +21,8 @@ void setup()
   neutralImg = loadImage("neutral.png");
   sadImg = loadImage("sad.png");
   verySadImg = loadImage("verysad.png");
+  stuDataTable = loadTable("studentEmotionData.csv", "header");
+  stuFinished = false;
 
   setup_tuio();
 }
@@ -52,7 +58,7 @@ void draw()
        
        //for the spinner
        if(piece.pieceName == "spinnerPiece"){
-         piece.updateSpinner();
+         stuName = piece.updateSpinner();
        }
   
        //for the slider
@@ -62,11 +68,16 @@ void draw()
        }
        
        if (piece.pieceName == "sliderStopPiece"){
-         piece.updateSlider(sliderStartDistance);
+         stuEmotion = piece.updateSlider(sliderStartDistance);
        }
      
        if (piece.pieceName == "completePiece") {
+         
          piece.finishCheckIn();
+         if (stuFinished == false){ //ensure that only one row of data is written
+         piece.addDataRow(stuDataTable);
+         stuFinished = true;
+         }
        }
     }
 }
