@@ -70,9 +70,10 @@ class gamePieceObject{
       return  stuName;
   }
 
-  void updateSlider(){
-    
-         float sliderLength = this.x_pos-10; //refactor: do this dynamically
+  void updateSlider(float startPos){
+         
+         float endPos = this.x_pos;
+         float sliderLength = endPos-startPos; 
          String[] emotions= {"Very Sad", "Sad", "Neutral", "Happy", "Very Happy"};
          int numEmotions = emotions.length;
          
@@ -83,21 +84,17 @@ class gamePieceObject{
          String studentEmotion = emotions[emotionNum];
          PImage[] emotionImages = {verySadImg, sadImg, neutralImg, happyImg, veryHappyImg};
          PImage emotionImg = emotionImages[emotionNum];
-         image(emotionImg, this.x_pos - emotionImg.width/10 ,this.y_pos + (emotionImg.height/10), emotionImg.width/10, emotionImg.height/10);
+         image(emotionImg, this.x_pos - 100 ,this.y_pos + 150, 100, 100);
          fill(#1D9594);
          textSize(36);
-         text("Emotion: " + studentEmotion, 1500, 50);
+         //text("Emotion: " + studentEmotion, 1500, 50);
   
   }
   
   int getStudentEmotionNum(float sliderLength, int numOfEmotions){
-           //int startingDistance = 880;
-           //float emotionInterval = startingDistance/(numOfEmotions-1);
-           //int emotionSectionNum = 0;
-           int emotionSectionNum = int(sliderLength/250); 
-           fill(0);
-           text(emotionSectionNum, 60,100);
-           
+           int startingDistance = 450; //max length of Slider 
+           float emotionInterval = startingDistance/(numOfEmotions);
+           int emotionSectionNum = int(sliderLength/emotionInterval); 
            if (emotionSectionNum>=numOfEmotions){
              emotionSectionNum = numOfEmotions-1;
            }
