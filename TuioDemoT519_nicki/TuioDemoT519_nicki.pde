@@ -1,9 +1,10 @@
-
+//global variables
 PImage veryHappyImg;
 PImage happyImg;
 PImage neutralImg;
 PImage sadImg;
 PImage verySadImg;
+float sliderStartDistance = 0.0;
 
 void setup()
 {
@@ -16,7 +17,7 @@ void setup()
   neutralImg = loadImage("neutral.png");
   sadImg = loadImage("sad.png");
   verySadImg = loadImage("verysad.png");
-  
+
   setup_tuio();
 }
 
@@ -47,14 +48,21 @@ void draw()
        gamePieceObject piece = new gamePieceObject(tobj);
        piece.getPieceValues();
        
+        
+       
        //for the spinner
        if(piece.pieceName == "spinnerPiece"){
          piece.updateSpinner();
        }
   
        //for the slider
+       if (piece.pieceName == "sliderStartPiece"){
+         sliderStartDistance = piece.x_pos;
+         
+       }
+       
        if (piece.pieceName == "sliderStopPiece"){
-         piece.updateSlider();
+         piece.updateSlider(sliderStartDistance);
        }
      
        if (piece.pieceName == "completePiece") {
