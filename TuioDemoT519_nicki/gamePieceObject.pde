@@ -53,7 +53,7 @@ class gamePieceObject{
   String getStudentName(float spinnerAngle){
   
      String stuName = "Unknown";
-     String[] names= {"Lilly", "Raegan", "James", "Raven", "A'mya", "Cedric", "Sarah", "Charlie"};
+     String[] names= {"Leah", "Robert", "Nadia", "Tom", "Benny", "Kyla", "Adam", "Jane"};
      int numOfStu = names.length;
      float degreeInterval = (2*3.14)/numOfStu;
      int spinnerSectionNum = 0;
