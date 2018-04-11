@@ -74,7 +74,8 @@ void draw()
        if (piece.pieceName == "completePiece") {
          
          piece.finishCheckIn();
-         if (stuFinished == false){ //ensure that only one row of data is written
+         //ensure that only one row of data is written
+         if (stuFinished == false){ 
          piece.addDataRow(stuDataTable);
          stuFinished = true;
          }
